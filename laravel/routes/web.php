@@ -13,6 +13,29 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+
+
+
+
+Route::group(['middleware' => ['web']], function(){
+
+    Route::get('/', function () {
+        return view('welcome');
+    });
+    
+    
+    Route::post('/signup', [
+        'uses' => 'App\Http\Controllers\UserController@postSignUp',
+        'as' => 'signup'
+    ]);
+
+    Route::post('/signin', [
+        'uses' => 'App\Http\Controllers\UserController@postSignIn',
+        'as' => 'signin'
+    ]);
+
+    Route::get('/dashboard', [
+        'uses' => 'App\Http\Controllers\UserController@getDashboard',
+        'as' => 'dashboard'
+    ]);
 });
