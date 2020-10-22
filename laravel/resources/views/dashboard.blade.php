@@ -17,18 +17,20 @@
     <section class="new posts">
         <div class="col-md-6 col-md-offset-3">
             <header><h3>What Other People Say...</h3></header>
+            @foreach($posts as $post)
             <article class="post">
-                <p>Lorem ipsum dolor sit amet, at iriure docendi vel. Soleat persequeris ea quo. Populo placerat has te, vis ut iuvaret volumus volutpat, ius et aeterno partiendo. Viris periculis adolescens ei has, his in fastidii elaboraret. Lorem graece prompta id est, nisl graecis intellegebat ut his, in facer errem sea.
-</p>
+                <p>{{$post->body}}</p>
                 <div class="info">
+                    Posted By {{$post->user->first_name}} on {{$post->updated_at}}
                 </div>
                 <div class="interaction">
                     <a href="">Like</a> |
                     <a href="">Dislike</a> |
                     <a href="">Edit</a> |
-                    <a href="">Delete</a> |
+                    <a href="{{route('post.delete' , ['post_id'=>$post->id])}}">Delete</a> 
                 </div>
-            </article>      
+            </article>
+            @endforeach
         </div>
     </section>
 @endsection

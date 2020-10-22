@@ -42,6 +42,12 @@ Route::group(['middleware' => ['web']], function(){
 
     Route::post('/createpost', [
         'uses' => 'App\Http\Controllers\PostController@postCreatePost',
-        'as' => 'post.create'
+        'as' => 'post.create',
+        'middleware' => 'auth'
+    ]);
+    Route::get('/post-delete/{post_id}',[
+        'uses' => 'App\Http\Controllers\PostController@getDeletePost',
+        'as' => 'post.delete',
+        'middleware' => 'auth'
     ]);
 });

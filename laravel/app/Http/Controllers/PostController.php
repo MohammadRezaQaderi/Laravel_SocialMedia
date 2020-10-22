@@ -23,12 +23,18 @@ class PostController extends Controller
         $post = new Post();
         $post->body = $request['body'];
 
-        $massage = 'There is an Error';
+        $message = 'There is an Error';
 
         if($request->user()->posts()->save($post)){
-            $massage = 'Post Create Successfully';
+            $message = 'Post Create Successfully';
         }
 
-        return redirect()->route('dashboard')->with(['massage'=>$massage]);
+        return redirect()->route('dashboard')->with(['message'=>$message]);
     }    
+
+    public function getDeletePost($post_id){
+        $post = Post::where('id' , $post_id)->first();
+        $post->delete();
+        return redirect()->route('dashboard')->with(['message' => 'Post Delete Successfuly!']);
+    }
 }
