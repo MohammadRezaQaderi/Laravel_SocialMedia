@@ -5,7 +5,10 @@
         <span class="navbar-toggler-icon"></span>
     </button>
 
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav navbar-right">
+            <li><a href="{{route('logout')}}">Logout</a></li>
+        </ul>
     </div>
     </nav>
 </header>
