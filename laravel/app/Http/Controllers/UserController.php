@@ -8,10 +8,6 @@ use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
-    
-    public function getDashboard(){
-        return view('dashboard');
-    }
 
     public function postSignUp(Request $request)
     {
@@ -32,7 +28,7 @@ class UserController extends Controller
         return redirect()->route('dashboard');
     }
 
-    public function postSignIn(){
+    public function postSignIn(Request $request){
         $this->validate($request , [
             'email' => 'required',
             'password' => 'required'
