@@ -39,6 +39,21 @@ Route::group(['middleware' => ['web']], function(){
         'as' => 'logout',
     ]);
 
+    Route::get('/account' , [
+        'uses' => 'App\Http\Controllers\UserController@getAccount',
+        'as' => 'account'    
+    ]);
+
+    Route::post('/updateaccount' , [
+        'uses' => 'App\Http\Controllers\UserController@postSaveAccount',
+        'as' => 'account.save'    
+    ]);
+
+    Route::get('/userimage/{filename}' ,[
+        'uses' => 'App\Http\Controllers\UserController@getUserImage',
+        'as' => 'account.image'
+    ]);
+
     Route::get('/dashboard', [
         'uses' => 'App\Http\Controllers\PostController@getDashboard',
         'as' => 'dashboard',
@@ -57,8 +72,8 @@ Route::group(['middleware' => ['web']], function(){
         'middleware' => 'auth'
     ]);
 
-    Route::post('/edit' , function(\Illuminate\Http\Request $request){
-        return response()->json(['message' => $request['postId']]);
-
-    })->name('edit');
+    Route::post('/edit' ,[
+        'uses' => 'App\Http\Controllers\PostController@postEditPost',
+        'as' => 'edit'
+    ]);
 });
