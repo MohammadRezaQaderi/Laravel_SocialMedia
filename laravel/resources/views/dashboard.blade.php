@@ -23,6 +23,13 @@
             <header><h3>What Other People Say...</h3></header>
             @foreach($posts as $post)
                 <article class="post" data-postid="{{ $post->id }}">
+                @if(Storage::disk('public')->has($post->user->first_name . 'Post' . '-' . $post->id . '.jpg'))
+                    <section class="row new-post">
+                        <div class="col-md-6 col-md-offset-3">
+                            <img src="{{ route('post.image' , ['filename'=> $post->user->first_name . 'Post'. '-' . $post->id . '.jpg']) }}"  alt="" class="img-responsive">
+                        </div>
+                    </section>
+                @endif
                     <p>{{$post->body}}</p>
                     <div class="info">
                         Posted By {{$post->user->first_name}} on {{$post->updated_at}}
@@ -37,13 +44,6 @@
                         @endif
                     </div>
                 </article>
-                @if(Storage::disk('local')->has($post->user->first_name . 'Post' . '-' . $post->id . '.jpg'))
-                    <section class="row new-post">
-                        <div class="col-md-6 col-md-offset-3">
-                            <img src="{{ route('post.image' , ['filename'=> $post->user->first_name . 'Post'. '-' . $post->id . '.jpg']) }}"  alt="" class="img-responsive">
-                        </div>
-                    </section>
-                @endif
             @endforeach
             </div>
         </section>
@@ -55,7 +55,7 @@
         <h4 class="modal-title">Edit Post </h4>
       </div>
       <div class="modal-body">
-            <form  action="{{route('edit')}}" method="post" enctype="multipart/form-data" >
+            <form  action="{{route('post.create')}}" method="post" enctype="multipart/form-data" >
                 <div class="form-group">
                     <label for="post-body">Edit The Post</label>
                     <textarea class="form-control" name="post-body" id="post-body" rows="5"></textarea>

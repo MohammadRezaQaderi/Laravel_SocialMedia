@@ -14,6 +14,14 @@
                     <input type="text" name="first_name" class="form-control" value="{{$user->first_name}}">
                 </div>
                 <div class="form-group">
+                    <label for="last_name">Last Name</label>
+                    <input type="text" name="last_name" class="form-control" value="{{$user->last_name}}">
+                </div>
+                <div class="form-group">
+                    <label for="age">Age</label>
+                    <input type="text" name="age" class="form-control" value="{{$user->age}}">
+                </div>
+                <div class="form-group">
                     <label for="image">Image Only .Jpg</label>
                     <input type="file" name="image" class="form-control" id="image">
                 </div>

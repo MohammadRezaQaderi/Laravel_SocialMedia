@@ -15,14 +15,20 @@ class UserController extends Controller
     {
         $this->validate($request , [
             'email' => 'required|email|unique:users',
+            'id' => 'required|unique:users',
             'first_name' => 'required|max:120',
+            'first_name' => 'required|max:120',
+            'age' => 'required',
             'password' => 'required|min:8'
         ]);
         
         $user = new User();
         $user->email =  request('email');
-        $user->first_name = request('first_name');;
-        $user->password = bcrypt( request('password'));;
+        $user->id = request('id');
+        $user->first_name = request('first_name');
+        $user->last_name = request('last_name');
+        $user->age = request('age');
+        $user->password = bcrypt( request('password'));
 
         $user->save();
         Auth::login($user);
@@ -33,10 +39,11 @@ class UserController extends Controller
     public function postSignIn(Request $request){
         $this->validate($request , [
             'email' => 'required',
+            'id' => 'required',
             'password' => 'required'
         ]);
 
-        if(Auth::attempt(['email'=>request('email'), 'password'=>request('password')])){
+        if(Auth::attempt(['email'=>request('email') , 'id' => request('id'), 'password'=>request('password')])){
             return redirect()->route('dashboard');
         }
         return redirect()->back();
@@ -55,7 +62,9 @@ class UserController extends Controller
     public function postSaveAccount(Request $request)
     {
         $this->validate($request , [
-            'first_name' => 'required|max:120'
+            'first_name' => 'required|max:120',
+            'first_name' => 'required|max:120',
+            'age' => 'required'
         ]);
         $user = Auth::user();
         $user->first_name = $request['first_name'];

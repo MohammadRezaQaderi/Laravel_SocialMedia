@@ -39,7 +39,7 @@ class PostController extends Controller
         $filename = $user->first_name . 'Post' . '-' . $post->id . '.jpg';
         
         if($file){
-            Storage::disk('local')->put($filename , File::get($file));
+            Storage::disk('public')->put($filename , File::get($file));
         }
         $post->save();
         
@@ -70,14 +70,14 @@ class PostController extends Controller
         $filename = $user->first_name . 'Post' . '-' . $post->id . '.jpg';
         
         if($file){
-            Storage::disk('local')->put($filename , File::get($file));
+            Storage::disk('public')->put($filename , File::get($file));
         }
         $post->update();
         return response()->json(['new_body' => $post->body] , 200);
     }
     public function getPostImage($filename)
     {
-        $file = Storage::disk('local')->get($filename);
+        $file = Storage::disk('public')->get($filename);
         return new Response($file , 200);
     }
     public function postLikePost(Request $request)
