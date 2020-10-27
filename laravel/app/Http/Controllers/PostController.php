@@ -8,6 +8,8 @@ use App\Models\Like;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
+use Illuminate\Http\Response;
+
 
 
 
@@ -36,12 +38,12 @@ class PostController extends Controller
         }
 
         $file = $request->file('image');
-        $filename = $user->first_name . 'Post' . '-' . $post->id . '.jpg';
+        $filename = $user->first_name .'_'. 'Post' . '-' . $post->id . '.jpg';
         
         if($file){
             Storage::disk('public')->put($filename , File::get($file));
         }
-        $post->save();
+        $request->user()->posts()->save($post);
         
         return redirect()->route('dashboard')->with(['message'=>$message]);
     }    
@@ -67,18 +69,13 @@ class PostController extends Controller
         $post->body = $request['body'];
         $user = Auth::user();
         $file = $request->file('image');
-        $filename = $user->first_name . 'Post' . '-' . $post->id . '.jpg';
+        $filename = $user->first_name .'_'. 'Post' . '-' . $post->id . '.jpg';
         
         if($file){
             Storage::disk('public')->put($filename , File::get($file));
         }
         $post->update();
         return response()->json(['new_body' => $post->body] , 200);
-    }
-    public function getPostImage($filename)
-    {
-        $file = Storage::disk('public')->get($filename);
-        return new Response($file , 200);
     }
     public function postLikePost(Request $request)
     {
@@ -112,5 +109,9 @@ class PostController extends Controller
             }
             return null;
     }
-
+    public function getPostImage($filename)
+    {
+        $file = Storage::disk('public')->get($filename);
+        return new Response($file , 200);
+    }
 }

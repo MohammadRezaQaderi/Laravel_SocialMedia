@@ -54,10 +54,6 @@ Route::group(['middleware' => ['web']], function(){
         'as' => 'account.image'
     ]);
 
-    Route::get('/postimage/{filename}' ,[
-        'uses' => 'App\Http\Controllers\PostController@getPostImage',
-        'as' => 'post.image'
-    ]);
 
     Route::get('/dashboard', [
         'uses' => 'App\Http\Controllers\PostController@getDashboard',
@@ -82,6 +78,10 @@ Route::group(['middleware' => ['web']], function(){
         'as' => 'edit'
     ]);
 
+    Route::get('/postimage/{filename}' ,[
+        'uses' => 'App\Http\Controllers\PostController@getPostImage',
+        'as' => 'post.image'
+    ]);
     Route::post('/like' ,[
         'uses' => 'App\Http\Controllers\PostController@postLikePost',
         'as' => 'like'

@@ -21,7 +21,7 @@ class CreateUsersTable extends Migration
             $table->string('last_name');
             $table->string('password');
             $table->integer('age');
-            $table->json('follower');
+            // $table->json('follower');
             $table->rememberToken();
         });
     }
