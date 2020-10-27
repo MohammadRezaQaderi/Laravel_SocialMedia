@@ -36,12 +36,12 @@ class PostController extends Controller
         }
 
         $file = $request->file('image');
-        $filename = $user->first_name . 'Post' . '-'. $post->id . '.jpg';
+        $filename = $user->first_name . 'Post' . '-' . $post->id . '.jpg';
         
         if($file){
             Storage::disk('local')->put($filename , File::get($file));
         }
-        $post->update();
+        $post->save();
         
         return redirect()->route('dashboard')->with(['message'=>$message]);
     }    
@@ -67,7 +67,7 @@ class PostController extends Controller
         $post->body = $request['body'];
         $user = Auth::user();
         $file = $request->file('image');
-        $filename = $user->first_name .'Post' . '-'. $post->id . '.jpg';
+        $filename = $user->first_name . 'Post' . '-' . $post->id . '.jpg';
         
         if($file){
             Storage::disk('local')->put($filename , File::get($file));
