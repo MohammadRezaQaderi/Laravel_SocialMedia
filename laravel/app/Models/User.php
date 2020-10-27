@@ -10,6 +10,9 @@ class User extends Model implements Authenticatable
 {
     use HasFactory;
     use \Illuminate\Auth\Authenticatable;
+    protected $casts = [
+        'follower' => 'array'
+    ];
 
     public function posts()
     {
