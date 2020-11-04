@@ -89,6 +89,7 @@ Route::group(['middleware' => ['web']], function(){
 
     Route::post('/comment' ,[
         'uses' => 'App\Http\Controllers\PostController@postCommentPost',
-        'as' => 'comment'
+        'as' => 'comment',
+        'middleware' => 'auth'
     ]);
 });

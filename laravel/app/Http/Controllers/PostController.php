@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Post;
 use App\Models\Like;
+use App\Models\Comment;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
@@ -18,7 +19,8 @@ class PostController extends Controller
 
     public function getDashboard(){
         $posts = Post::orderBy('updated_at' , 'desc')->get();
-        return view('dashboard' , ['posts'=>$posts]);
+        $comments = Comment::orderBy('updated_at' , 'desc')->get();
+        return view('dashboard' , ['posts'=>$posts , 'comments'=>$comments]);
     }
 
     public function postCreatePost(Request $request)
@@ -114,19 +116,15 @@ class PostController extends Controller
     public function postCommentPost(Request $request)
     {
         $this->validate($request , [
-            'body' => 'required'
+            'body' => 'required|max:1000'
         ]);
-        
-        $post_id = $request['postId'];
-        $body = $request['body'];
-        $post = Post::find($post_id);
-        if(!$post){
-            return null;
-        }
+        $comment = new Comment();
+        $comment->post_id = $request['postId'];
+        $comment->comment = $request['body'];
         $user = Auth::user();
-        $comments = $user->comments()->where('post_id' , $post_id)->first();
-        $comments->save();
-        return response()->json(['new_body' => $post->body] , 200);
+        $comment->user_id = $user->id;
+        $comment->save();
+        return redirect()->route('dashboard');
 
     }
 

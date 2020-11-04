@@ -45,11 +45,18 @@
                         <a href="{{route('post.delete' , ['post_id'=>$post->id])}}">Delete</a>  |
                         <a href="" class="comment">Comment</a>
                         @endif
+                        <br>
+                        @foreach($comments->take(2) as $comment)
+                            @if($comment->post_id == $post->id)
+                                {{ $comment->comment}}{{ $post->user->id}}<br>
+                            @endif
+                        @endforeach
                     </div>
                 </article>
             @endforeach
             </div>
         </section>
+<!-- This Is For Edit Box-->
 <div class="modal fade" tabindex="-1" role="dialog" id="edit-modal">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -76,9 +83,34 @@
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+
+<!-- This Is For Comment Box-->
+<div class="modal fade" tabindex="-1" role="dialog" id="comment-modal">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Comment Post </h4>
+      </div>
+      <div class="modal-body">
+            <form  action="{{route('comment')}}" method="post" enctype="multipart/form-data" >
+                <div class="form-group">
+                    <label for="comment-body">Comment For Post</label>
+                    <textarea class="form-control" name="comment-body" id="comment-body" rows="5"></textarea>
+                </div>
+            </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" id="save-modal-Comment">Save changes</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 <script>
     var token = '{{Session::token()}}';
     var urlEdit = '{{route('edit')}}' ;
     var urlLike = '{{route('like')}}' ;
+    var urlComment = '{{route('comment')}}';
 </script>
 @endsection

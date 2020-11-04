@@ -22,6 +22,26 @@ $('#save-modal').on('click', function(){
     }); 
 });
 
+$('.post').find('.interaction').find('.comment').on('click', function(event){
+    event.preventDefault();
+    commentBodyElement =event.target.parentNode.parentNode.childNodes[1]; 
+    postId = event.target.parentNode.parentNode.dataset['postid'];
+    $('#comment-modal').modal();
+});
+
+$('#save-modal-Comment').on('click', function(){
+    $.ajax({
+        method: 'POST',
+        url: urlComment,
+        data: {body: $('#comment-body').val() , postId: postId , _token: token}
+    })
+    .done(function(msg){
+        $(commentBodyElement).text(msg['new_body_comment']);
+        $('#comment-modal').modal('hide');
+    }); 
+});
+
+
 $('.like').on('click' , function(event){
     event.preventDefault();
     postId = event.target.parentNode.parentNode.dataset['postid'];
