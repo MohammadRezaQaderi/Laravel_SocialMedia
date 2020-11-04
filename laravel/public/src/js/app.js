@@ -33,10 +33,9 @@ $('#save-modal-Comment').on('click', function(){
     $.ajax({
         method: 'POST',
         url: urlComment,
-        data: {body: $('#comment-body').val() , postId: postId , _token: token}
+        data: {comment_body: $('#comment-body').val() , postId: postId , _token: token}
     })
-    .done(function(msg){
-        $(commentBodyElement).text(msg['new_body_comment']);
+    .done(function(){
         $('#comment-modal').modal('hide');
     }); 
 });

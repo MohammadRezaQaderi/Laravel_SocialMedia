@@ -56,6 +56,18 @@ class PostController extends Controller
             return redirect()->back();
         }
         $post->delete();
+        $comments = Comment::All();
+        foreach($comments as $comment){
+            if($comment->post_id == $post_id){
+                $comment->delete();
+            }
+        }
+        $likes = Like::All();
+        foreach($likes as $like){
+            if($like->post_id == $post_id){
+                $like->delete();
+            }
+        }
         return redirect()->route('dashboard')->with(['message' => 'Post Delete Successfuly!']);
     }
 
@@ -116,16 +128,15 @@ class PostController extends Controller
     public function postCommentPost(Request $request)
     {
         $this->validate($request , [
-            'body' => 'required|max:1000'
+            'comment_body' => 'required|max:1000'
         ]);
         $comment = new Comment();
         $comment->post_id = $request['postId'];
-        $comment->comment = $request['body'];
+        $comment->comment = $request['comment_body'];
         $user = Auth::user();
         $comment->user_id = $user->id;
         $comment->save();
-        return redirect()->route('dashboard');
-
+        return null;
     }
 
     public function getPostImage($filename)
