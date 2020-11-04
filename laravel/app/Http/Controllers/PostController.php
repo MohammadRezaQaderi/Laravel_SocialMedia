@@ -77,6 +77,7 @@ class PostController extends Controller
         $post->update();
         return response()->json(['new_body' => $post->body] , 200);
     }
+
     public function postLikePost(Request $request)
     {
         $post_id = $request['postId'];
@@ -109,6 +110,26 @@ class PostController extends Controller
             }
             return null;
     }
+
+    public function postCommentPost(Request $request)
+    {
+        $this->validate($request , [
+            'body' => 'required'
+        ]);
+        
+        $post_id = $request['postId'];
+        $body = $request['body'];
+        $post = Post::find($post_id);
+        if(!$post){
+            return null;
+        }
+        $user = Auth::user();
+        $comments = $user->comments()->where('post_id' , $post_id)->first();
+        $comments->save();
+        return response()->json(['new_body' => $post->body] , 200);
+
+    }
+
     public function getPostImage($filename)
     {
         $file = Storage::disk('public')->get($filename);

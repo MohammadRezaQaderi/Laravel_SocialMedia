@@ -86,4 +86,9 @@ Route::group(['middleware' => ['web']], function(){
         'uses' => 'App\Http\Controllers\PostController@postLikePost',
         'as' => 'like'
     ]);
+
+    Route::post('/comment' ,[
+        'uses' => 'App\Http\Controllers\PostController@postCommentPost',
+        'as' => 'comment'
+    ]);
 });
