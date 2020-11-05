@@ -82,9 +82,9 @@ class PostController extends Controller
         }
         $post->body = $request['body'];
         $user = Auth::user();
-        $file = $request->file('image');
         $filename = $user->first_name .'_'. 'Post' . '-' . $post->id . '.jpg';
-        
+        Storage::disk('public')->delete($filename);
+        $file = $request->file('image');
         if($file){
             Storage::disk('public')->put($filename , File::get($file));
         }
@@ -136,7 +136,8 @@ class PostController extends Controller
         $user = Auth::user();
         $comment->user_id = $user->id;
         $comment->save();
-        return null;
+        return response()->json(['new_body_comment' => $comment->comment_body] , 200);
+
     }
 
     public function getPostImage($filename)

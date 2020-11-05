@@ -1,6 +1,6 @@
 <header>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="{{route('dashboard')}}">Navbar</a>
+    <a class="navbar-brand" href="{{route('dashboard')}}">2DR2DR</a>
 
 
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
