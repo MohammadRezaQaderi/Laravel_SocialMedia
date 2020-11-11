@@ -42,13 +42,14 @@
                         @if(Auth::user() == $post->user)
                         |
                         <a href="{{route('editPosts' , ['post_id'=>$post->id])}}" class="edit-post">Edit</a> |
-                        <a href="{{route('post.delete' , ['post_id'=>$post->id])}}">Delete</a>  |
-                        <a href="" class="comment">Comment</a>
+                        <a href="{{route('post.delete' , ['post_id'=>$post->id])}}">Delete</a>
                         @endif
+                        |
+                        <a href="" class="comment">Comment</a>
                         <br>
                         @foreach($comments->take(2) as $comment)
                             @if($comment->post_id == $post->id)
-                                {{ $comment->comment}}{{ $post->user->id}}<br>
+                                {{ $comment->comment}}<br>
                             @endif
                         @endforeach
                     </div>

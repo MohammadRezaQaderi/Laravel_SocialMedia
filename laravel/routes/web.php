@@ -107,4 +107,10 @@ Route::group(['middleware' => ['web']], function(){
         'as' => 'comment',
         'middleware' => 'auth'
     ]);
+
+    Route::post('/post-view/{post_id}' ,[
+        'uses' => 'App\Http\Controllers\PostController@getPostView',
+        'as' => 'postView',
+        'middleware' => 'auth'
+    ]);
 });

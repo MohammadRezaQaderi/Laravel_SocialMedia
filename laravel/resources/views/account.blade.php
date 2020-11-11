@@ -39,12 +39,9 @@
         </div>
     </section>
     @if(Storage::disk('local')->has($user->first_name . '-' . $user->username . '.jpg'))
-        <!-- <section class="row new-post">
-            <div class="col-md-6 col-md-offset-3" style="width: 120px;height: 120px;height: auto;float: left;margin: 3px;padding: 3px; items-align: center">
-                <img src="{{ route('account.image' , ['filename'=> $user->first_name . '-' . $user->username . '.jpg']) }}"  alt="" class="img-responsive" style="border-radius: 50%;  max-width: 100%; height: auto; object-fit:cover;" >
-            </div>
-        </section> -->
-        <img src="{{ route('account.image' , ['filename'=> $user->first_name . '-' . $user->username . '.jpg']) }}"  alt="" class="img-responsive">
+        <div class="profile-image" style="position: relative;width: 200px;height: 200px;overflow: hidden;border-radius: 50%;">
+            <img src="{{ route('account.image' , ['filename'=> $user->first_name . '-' . $user->username . '.jpg']) }}"  alt="" class="img-responsive" style="width: 100%;height: auto;">
+		</div>
     @endif
 @endsection
 
