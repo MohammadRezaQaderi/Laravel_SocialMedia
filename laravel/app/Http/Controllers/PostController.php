@@ -34,7 +34,6 @@ class PostController extends Controller
 
         $message = 'There is an Error';
         $user = Auth::user();
-        
         if($request->user()->posts()->save($post)){
             $message = 'Post Create Successfully';
         }
@@ -71,17 +70,21 @@ class PostController extends Controller
         return redirect()->route('dashboard')->with(['message' => 'Post Delete Successfuly!']);
     }
 
+    public function getEditPost(){
+        $user = Auth::user();
+        error_log(request('post_id'));
+        $post = Post::find(request('post_id'));
+        return view('editPost', ['user' =>$user , 'post' =>$post]);
+    }
+
     public function postEditPost(Request $request){
         $this->validate($request , [
-            'body' => 'required'
+            'post-body' => 'required'
         ]);
 
-        $post = Post::find($request['postId']);
-        if(Auth::user() != $post->user){
-            return redirect()->back();
-        }
-        $post->body = $request['body'];
+        $post = Post::findOrFail($request['post_id']);
         $user = Auth::user();
+        $post->body = $request['post-body'];
         $filename = $user->first_name .'_'. 'Post' . '-' . $post->id . '.jpg';
         Storage::disk('public')->delete($filename);
         $file = $request->file('image');
@@ -89,7 +92,7 @@ class PostController extends Controller
             Storage::disk('public')->put($filename , File::get($file));
         }
         $post->update();
-        return response()->json(['new_body' => $post->body] , 200);
+        return redirect()->route('dashboard');
     }
 
     public function postLikePost(Request $request)
@@ -134,10 +137,10 @@ class PostController extends Controller
         $comment->post_id = $request['postId'];
         $comment->comment = $request['comment_body'];
         $user = Auth::user();
-        $comment->user_id = $user->id;
+        $comment->user_id = $user->username;
         $comment->save();
-        return response()->json(['new_body_comment' => $comment->comment_body] , 200);
-
+        // return response()->json(['new_body' => $comment->comment_body] , 200);
+        return null;
     }
 
     public function getPostImage($filename)

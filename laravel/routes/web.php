@@ -23,7 +23,13 @@ Route::group(['middleware' => ['web']], function(){
         return view('welcome');
     })->name('home');
     
+    Route::get('/Profile',[
+        'uses' => 'App\Http\Controllers\UserController@getUserProfile',
+        'as' => 'profile',
+        'middleware' => 'auth'
+    ]);
     
+
     Route::post('/signup', [
         'uses' => 'App\Http\Controllers\UserController@postSignUp',
         'as' => 'signup'
@@ -41,7 +47,9 @@ Route::group(['middleware' => ['web']], function(){
 
     Route::get('/account' , [
         'uses' => 'App\Http\Controllers\UserController@getAccount',
-        'as' => 'account'    
+        'as' => 'account',
+        'middleware' => 'auth'
+
     ]);
 
     Route::post('/updateaccount' , [
@@ -72,10 +80,17 @@ Route::group(['middleware' => ['web']], function(){
         'as' => 'post.delete',
         'middleware' => 'auth'
     ]);
+    
+    Route::get('edit-post/{post_id}' ,[
+        'uses' => 'App\Http\Controllers\PostController@getEditPost',
+        'as' => 'editPosts',
+        'middleware' => 'auth'  
+    ]);
 
-    Route::post('/edit' ,[
+    Route::post('/post-edit' ,[
         'uses' => 'App\Http\Controllers\PostController@postEditPost',
-        'as' => 'edit'
+        'as' => 'edit-post',
+        'middleware' => 'auth'
     ]);
 
     Route::get('/postimage/{filename}' ,[

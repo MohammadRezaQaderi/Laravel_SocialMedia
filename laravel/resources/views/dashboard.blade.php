@@ -34,14 +34,14 @@
                 @endif
                     <p>{{$post->body}}</p>
                     <div class="info">
-                        Posted By {{$post->user->first_name}} on {{$post->updated_at}}
+                        Posted By {{$post->user->username}} on {{$post->updated_at}}
                     </div>
                     <div class="interaction">
                         <a href="" class="like">{{Auth::user()->likes()->where('post_id' ,$post->id)->first() ? Auth::user()->likes()->where('post_id' ,$post->id)->first()->like == 1 ? 'You Like This Post' : 'Like' : 'Like'}}</a> |
                         <a href="" class="like">{{Auth::user()->likes()->where('post_id' ,$post->id)->first() ? Auth::user()->likes()->where('post_id' ,$post->id)->first()->like == 0 ? 'You Don\'t Like This Post' : 'DisLike' : 'DisLike'}}</a> 
                         @if(Auth::user() == $post->user)
                         |
-                        <a href="" class="edit">Edit</a> |
+                        <a href="{{route('editPosts' , ['post_id'=>$post->id])}}" class="edit-post">Edit</a> |
                         <a href="{{route('post.delete' , ['post_id'=>$post->id])}}">Delete</a>  |
                         <a href="" class="comment">Comment</a>
                         @endif
@@ -56,33 +56,7 @@
             @endforeach
             </div>
         </section>
-<!-- This Is For Edit Box-->
-<div class="modal fade" tabindex="-1" role="dialog" id="edit-modal">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">Edit Post </h4>
-      </div>
-      <div class="modal-body">
-            <form  action="{{route('edit')}}" method="post" enctype="multipart/form-data" >
-                <div class="form-group">
-                    <label for="post-body">Edit The Post</label>
-                    <textarea class="form-control" name="post-body" id="post-body" rows="5"></textarea>
-                </div>
-                <div class="form-group">
-                    <label for="image">Image Only .Jpg</label>
-                    <input type="file" name="image" class="form-control" id="image">
-                </div>
-            </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" id="save-modal">Save changes</button>
-      </div>
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+
 
 <!-- This Is For Comment Box-->
 <div class="modal fade" tabindex="-1" role="dialog" id="comment-modal">
@@ -109,7 +83,6 @@
 </div><!-- /.modal -->
 <script>
     var token = '{{Session::token()}}';
-    var urlEdit = '{{route('edit')}}' ;
     var urlLike = '{{route('like')}}' ;
     var urlComment = '{{route('comment')}}';
 </script>
