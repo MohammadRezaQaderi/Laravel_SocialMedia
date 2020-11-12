@@ -54,7 +54,7 @@
 				@if($user->id == $post->user_id)
 					<div class="gallery-item" tabindex="0">
 					@if(Storage::disk('public')->has($post->user->first_name.'_' . 'Post' . '-' . $post->id . '.jpg'))
-					   	<a href="{{route('postView' , ['post_id' => $post->id ] )}}"><img src="{{ route('post.image' , ['filename'=> $post->user->first_name.'_' . 'Post'. '-' . $post->id . '.jpg']) }}"  alt="" class="gallery-image"></a>
+					   	<img href="{{route('post.view' , ['post_id' => $post->id ] )}}" src="{{ route('post.image' , ['filename'=> $post->user->first_name.'_' . 'Post'. '-' . $post->id . '.jpg']) }}"  alt="" class="gallery-image">
                 	@endif
 					<?php $post_like = 0; ?>
                     @foreach($likes as $like)

@@ -1,30 +1,93 @@
-// var postId = 0;
-// var postBodyElement = null;
-// $('.post').find('.interaction').find('.edit').on('click', function(event){
-//     event.preventDefault();
 
-//     postBodyElement =event.target.parentNode.parentNode.childNodes[1]; 
-//     var postBody = postBodyElement.textContent;
-//     postId = event.target.parentNode.parentNode.dataset['postid'];
-//     $('#edit-modal').modal();
-// });
+// define lettering classes
+$(".ac, .ac-d").lettering();
+$(".al, .ac-l").lettering("lines");
+$(".aw, .aw-l").lettering("words");
 
-// $('#save-modal').on('click', function(){
-//     $.ajax({
-//         method: 'POST',
-//         url: urlEdit,
-//         data: {body: $('#post-body').val() , postId: postId ,_token: token }
-//     })
-//     .done(function(msg){
-//         $(postBodyElement).text(msg['new_body']);
-//         $('#edit-modal').modal('hide');
-//     }); 
-// });
+// check for lettering.js whitespaces
+$("span[class^='char']").each(function(){
+	var str = $(this).text();
+	
+	if(str === null || str.match(/^ *$/) !== null){
+    $(this).empty();
+	}
+});
 
-$('.post').find('.interaction').find('.comment').on('click', function(event){
+$("content").show(0).css({
+	'display': 'flex',
+	'justify-content': 'center',
+	'align-items': 'center'
+});
+
+// define elements for blob thingy
+const CURSOR = $("#cBlob");
+const CLICKER = $("#cClick");
+const BLOBBER = $(".blobber");
+
+// set blob position
+$(document).mousemove(function(e) {
+  CURSOR.css({
+    top: e.pageY - CURSOR.height() / 2 + "px",
+    left: e.pageX - CURSOR.width() / 2 + "px"
+  });
+});
+
+// functions for cursor
+const initCursor = () => CURSOR.css("transform", "scale(1)");
+const setCursorHover = () => CURSOR.css("transform", "scale(2)");
+const removeCursorHover = () => CURSOR.css("transform", "scale(1)");
+const setCursorClick = e => {
+  CLICKER.css({
+    top: e.pageY - CLICKER.height() / 2 + "px",
+    left: e.pageX - CLICKER.width() / 2 + "px"
+  });
+  CLICKER.addClass("clicked");
+};
+
+setTimeout(function(){
+	initCursor();
+}, 1000)
+
+// non clickable elements
+BLOBBER.each(function() {
+  $(this).on({
+    mouseover: setCursorHover,
+    mouseleave: removeCursorHover
+  });
+  
+  if($(this).hasClass("link")){
+    $(this)
+      .click(setCursorClick)
+      .click(function(){
+      var href = $(this).data('href');
+      
+      setTimeout(function(){
+        toggleNav();
+        
+        //window.location.href = href;
+        var result = confirm("the " + href + " page will appear here");
+        
+        if (result) {
+          window.location.reload(false);
+        }
+      }, 800);
+    });
+  }
+});
+
+$(".nav__icon").click(function() {
+  toggleNav();
+});
+
+
+
+
+
+var commentBodyElement = null;
+$('.post').find('.interaction').find('.comment').find('.material-icons').on('click', function(event){
     event.preventDefault();
-    commentBodyElement =event.target.parentNode.parentNode.childNodes[1]; 
-    postId = event.target.parentNode.parentNode.dataset['postid'];
+    commentBodyElement =event.target.parentNode.parentNode.parentNode.childNodes[1]; 
+    postId = event.target.parentNode.parentNode.parentNode.dataset['postid'];
     $('#comment-modal').modal();
 });
 
@@ -35,7 +98,6 @@ $('#save-modal-Comment').on('click', function(){
         data: {comment_body: $('#comment-body').val() , postId: postId ,_token: token}
     })
     .done(function(){
-        
         $('#comment-modal').modal('hide');
     }); 
 });

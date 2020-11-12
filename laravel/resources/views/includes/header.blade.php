@@ -19,6 +19,7 @@
             <li><a href="{{route('account')}}">Account</a></li>
             <li><a href="{{route('logout')}}">Logout</a></li>
         @endif
+            <li><a href="{{route('sign-in')}}">Login</a></li>
         </ul>
     </div>
     </nav>

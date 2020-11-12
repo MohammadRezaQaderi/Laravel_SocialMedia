@@ -149,7 +149,9 @@ class PostController extends Controller
         return new Response($file , 200);
     }
 
-    public function getPostView(){
-        return view('postView');
+    public function getPostView($post_id)
+    {
+        $post = Post::findOrFail($post_id);
+        return view('postView' , ['post' =>$post]); 
     }
 }

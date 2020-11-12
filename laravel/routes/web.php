@@ -29,12 +29,19 @@ Route::group(['middleware' => ['web']], function(){
         'middleware' => 'auth'
     ]);
     
-
+    Route::get('/sign-up', function () {
+        return view('sign-up');
+    })->name('sign-up');
+    
     Route::post('/signup', [
         'uses' => 'App\Http\Controllers\UserController@postSignUp',
         'as' => 'signup'
     ]);
 
+    Route::get('/sign-in', function () {
+        return view('sign-in');
+    })->name('sign-in');
+    
     Route::post('/signin', [
         'uses' => 'App\Http\Controllers\UserController@postSignIn',
         'as' => 'signin'
@@ -75,6 +82,11 @@ Route::group(['middleware' => ['web']], function(){
         'middleware' => 'auth'
     ]);
     
+    Route::post('/post-view/{post_id}' ,[
+        'uses' => 'App\Http\Controllers\PostController@getPostView',
+        'as' => 'post.view'
+    ]);
+    
     Route::get('/post-delete/{post_id}',[
         'uses' => 'App\Http\Controllers\PostController@getDeletePost',
         'as' => 'post.delete',
@@ -105,12 +117,6 @@ Route::group(['middleware' => ['web']], function(){
     Route::post('/comment' ,[
         'uses' => 'App\Http\Controllers\PostController@postCommentPost',
         'as' => 'comment',
-        'middleware' => 'auth'
-    ]);
-
-    Route::post('/post-view/{post_id}' ,[
-        'uses' => 'App\Http\Controllers\PostController@getPostView',
-        'as' => 'postView',
         'middleware' => 'auth'
     ]);
 });

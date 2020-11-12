@@ -2,6 +2,9 @@
 
 @section('content')
 @include('includes.message-block')
+<head>
+	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+</head>
     <!-- The Create Post Section -->
     <section class="row new-post">
         <div class="col-md-6 col-md-offset-3">
@@ -41,11 +44,11 @@
                         <a href="" class="like">{{Auth::user()->likes()->where('post_id' ,$post->id)->first() ? Auth::user()->likes()->where('post_id' ,$post->id)->first()->like == 0 ? 'You Don\'t Like This Post' : 'DisLike' : 'DisLike'}}</a> 
                         @if(Auth::user() == $post->user)
                         |
-                        <a href="{{route('editPosts' , ['post_id'=>$post->id])}}" class="edit-post">Edit</a> |
-                        <a href="{{route('post.delete' , ['post_id'=>$post->id])}}">Delete</a>
+                        <a href="{{route('editPosts' , ['post_id'=>$post->id])}}" class="edit-post"><i class="material-icons">edit</i></a> |
+                        <a href="{{route('post.delete' , ['post_id'=>$post->id])}}"><i class="material-icons">delete</i></a>
                         @endif
                         |
-                        <a href="" class="comment">Comment</a>
+                        <a href="" class="comment"><i class="material-icons">comment</i></a>
                         <br>
                         @foreach($comments->take(2) as $comment)
                             @if($comment->post_id == $post->id)

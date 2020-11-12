@@ -1,0 +1,296 @@
+$white:#fff;
+$black:#000000;
+
+*{
+  padding:0;
+  margin:0;
+  box-sizing:border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+body {
+  justify-content:center;
+  align-items:center;
+  min-height:100vh;
+  position:relative;
+}
+
+h2 {
+  	  font-weight:800;
+	    font-size:12vmin;
+      padding-left: 28px;
+      padding-bottom: 10px;
+	    line-height:1;
+	    color:$white;
+	    white-space:nowrap;
+	    -webkit-text-stroke:1pt $black;
+	    overflow: hidden;
+}
+
+p {
+  font-family: arial, sans-serif;
+  color:$black;
+	overflow: hidden; 
+}
+
+content {
+    background:$black;
+}
+
+// CURSOR BLOB
+#cBlob {
+  width: 50px;
+  height: 50px;
+  background-image: radial-gradient(
+    circle farthest-corner at 10% 20%,
+    #df5b5b 0%,
+    #ffd16e 100%
+  );
+  background:#fff;
+  background-size: 1600% 1600%;
+  position: absolute;
+  mix-blend-mode: difference;
+  pointer-events: none;
+  z-index: 60;
+  transform:scale(0);
+  transition: transform 0.8s ease;
+  animation: blobRadius 6s ease-in-out infinite,
+    blobBackground 15s ease infinite;
+}
+
+@media (hover: none) {
+  #cBlob{
+    display:none;
+  }
+}
+
+// PAGE TRANSITION BLOB
+#cClick {
+  width: 500px;
+  height: 500px;
+  background: #f1eff6;
+  position: fixed;
+  z-index: 60;
+  pointer-events:none;
+  transition: top 0.1s ease, left 0.1s ease, transform 1.8s ease,
+    background 1.5s ease;
+  animation: blobRadius 6s ease-in-out infinite,
+    blobBackground 15s ease infinite;
+  opacity: 0;
+  transform: scale(0.1);
+
+  &.clicked {
+    opacity: 1;
+    transform: scale(10);
+    background: #28212e;
+  }
+}
+
+.blobber{
+  cursor:pointer;
+}
+
+.ac, .aw, .al, .ac-d, .aw-d, .al-d{
+  span:blank{
+    min-width:20px;
+  }
+}
+
+// BLOB ANIMATIONS
+@keyframes blobRadius {
+  0%,100% { border-radius: 43% 77% 80% 40% / 40% 40% 80% 80% }
+  20% { border-radius: 47% 73% 61% 59% / 47% 75% 45% 73% }
+  40% { border-radius: 46% 74% 74% 46% / 74% 58% 62% 46% }
+  60% { border-radius: 47% 73% 61% 59% / 40% 40% 80% 80% }
+  80% { border-radius: 50% 70% 52% 68% / 51% 61% 59% 69% }
+}
+@keyframes blobBackground {
+  0%,100% { background-position: 0% 50% }
+  50% { background-position: 100% 50% }
+}
+
+content{
+  height:100vh;
+  width:100%;
+  overflow:hidden;
+  display:none;
+  
+  #title{
+  	position: absolute;
+  	z-index: 70;
+  	
+  	h1{
+	    font-weight:800;
+	    font-size:12vmin;
+	    margin:0;
+	    line-height:1;
+	    color:$white;
+	    white-space:nowrap;
+	    animation:cutoff-top 1s forwards;
+	    -webkit-text-stroke:1pt $black;
+	    overflow: hidden;
+	    
+	    $cutoff:60%;
+	    clip-path:polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+	    
+	    &:last-child{
+	    	position:absolute;
+	    	top:0;
+	    	left:0;
+	      -webkit-text-stroke:1pt $black;
+	      color:transparent;
+	      clip-path:polygon(0% 100%, 100% 100%, 100% 100%, 0% 100%);
+	      animation:cutoff-bottom 1s forwards;
+	    }
+	    
+	    @keyframes cutoff-top{
+	    	to{
+	    		clip-path:polygon(0% 0%, 100% 0%, 100% $cutoff, 0% $cutoff);
+	    	}
+	    }
+	    @keyframes cutoff-bottom{
+	    	to{
+	    		clip-path:polygon(0% $cutoff, 100% $cutoff, 100% 100%, 0% 100%);
+	    	}
+	    }
+	  }
+  }
+}
+
+// ANIMATIONS
+.a{
+  &c, &l, &w {
+    // loop for offsetting nodes
+    span {
+      animation: rollIn 0.3s forwards;
+      opacity: 0;
+      transform: translateY(-8px) rotate(-5deg);
+      display: inline-block;
+
+      @for $i from 1 through 50 {
+        &:nth-child(#{$i}) {
+          animation-delay: #{$i * 0.05}s;
+        }
+      }
+      
+      &:empty{
+      	width:15px;
+      }
+    }
+  }
+  &c-d, &l-d, &w-d{
+    // loops for offsetting nth-childs, not only nodes
+    @for $i from 1 through 50{
+      &:nth-child(#{$i}){
+        transition:transform 0.5s ease #{$i * 0.15}s;
+          
+        span{
+          animation: rollIn 0.3s forwards;
+          opacity: 0;
+          transform: translateY(-8px) rotate(-5deg);
+          display: inline-block;
+          
+          @for $f from 1 through 50 {
+            &:nth-child(#{$f}) {
+              animation-delay: #{($f * 0.05) + ($i * 0.15)}s;
+            }
+          }
+          
+          &:empty{
+      			width:15px;
+      		}
+        }
+      }
+    }
+  }
+  &l, &l-d{
+    span{
+      animation: rollIn 0.7s forwards;
+    }
+  }
+  &w, &w-d{
+    span{
+      animation: rollIn 0.5s forwards;
+    }
+  }
+}
+
+@keyframes rollIn {
+  to{
+    transform: translateY(0) rotate(0);
+    opacity: 1;
+  }
+}
+
+
+.parallax { 
+  /* The image used */
+  background-image: url("https://github.com/madelineuribes/madeline/blob/master/Martin-Shantell.jpg?raw=true");
+
+  /* Set a specific height */
+  height: 100vh; 
+
+  /* Create the parallax scrolling effect */
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+#section-info {
+  padding-top: 5em;
+}
+
+#tribute-link {
+  font-weight: 900;
+  color: black;
+  text-decoration: none;
+}
+
+#tribute-link:visited,
+#tribute-link:active, {
+  font-weight: 900;
+  color: black;
+  text-decoration: none;
+}
+
+#tribute-link:hover {
+  text-decoration: underline;
+}
+
+#section03 {
+  padding-top: 30px;
+}
+
+.img-responsive {
+  margin: 0 auto;
+}
+
+#image {
+  max-width: 100%;
+  height: auto;
+  position: center;
+}
+
+#img-caption {
+  font-family: arial, sans-serif;
+  color:$black;
+}
+
+.btn {
+  font-family: arial;
+  font-size: 15px;
+  margin-top: 15px;
+  width: 160px;
+  border-radius: 0px;
+  background-color: black;
+  color: white;
+    -webkit-transition-duration: 0.4s; /* Safari */
+  transition-duration: 0.4s;
+}
+
+.btn:hover {
+  background-color: white; 
+  border: 2px solid black;
+  color: black;
+}
