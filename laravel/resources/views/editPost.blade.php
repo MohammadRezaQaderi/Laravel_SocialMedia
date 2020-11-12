@@ -9,8 +9,8 @@
             @if($post->id != null)
             <form action="{{route('edit-post' , ['post_id'=>$post->id])}}" method="post" enctype="multipart/form-data">
                 <div class="form-group">
-                    <textarea class="form-control" name="post-body" id="new-post"  rows="7" placeholder="Your Post"></textarea>
-                </div>
+                    <textarea class="form-control" name="post-body" id="new-post"  rows="7" placeholder="{{$post->body}}">{{$post->body}}</textarea>
+                </div>  
                 <div class="form-group">
                     <label for="image">Image Only .Jpg</label>
                     <input type="file" name="image" class="form-control" id="image">

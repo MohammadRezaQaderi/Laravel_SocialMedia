@@ -29,11 +29,7 @@
             @foreach($posts as $post)
                 <article class="post" data-postid="{{ $post->id }}">
                 @if(Storage::disk('public')->has($post->user->first_name.'_' . 'Post' . '-' . $post->id . '.jpg'))
-                    <section class="row new-post">
-                        <div class="col-md-6 col-md-offset-3">
-                            <img src="{{ route('post.image' , ['filename'=> $post->user->first_name.'_' . 'Post'. '-' . $post->id . '.jpg']) }}"  alt="" class="img-responsive">
-                        </div>
-                    </section>
+					<img href="{{route('post.view' , ['post_id' => $post->id ] )}}" src="{{ route('post.image' , ['filename'=> $post->user->first_name.'_' . 'Post'. '-' . $post->id . '.jpg']) }}"  alt="" class="gallery-image">
                 @endif
                     <p>{{$post->body}}</p>
                     <div class="info">
@@ -42,13 +38,13 @@
                     <div class="interaction">
                         <a href="" class="like">{{Auth::user()->likes()->where('post_id' ,$post->id)->first() ? Auth::user()->likes()->where('post_id' ,$post->id)->first()->like == 1 ? 'You Like This Post' : 'Like' : 'Like'}}</a> |
                         <a href="" class="like">{{Auth::user()->likes()->where('post_id' ,$post->id)->first() ? Auth::user()->likes()->where('post_id' ,$post->id)->first()->like == 0 ? 'You Don\'t Like This Post' : 'DisLike' : 'DisLike'}}</a> 
-                        @if(Auth::user() == $post->user)
-                        |
-                        <a href="{{route('editPosts' , ['post_id'=>$post->id])}}" class="edit-post"><i class="material-icons">edit</i></a> |
-                        <a href="{{route('post.delete' , ['post_id'=>$post->id])}}"><i class="material-icons">delete</i></a>
-                        @endif
                         |
                         <a href="" class="comment"><i class="material-icons">comment</i></a>
+                        @if(Auth::user() == $post->user)
+                        |
+                            <a href="{{route('editPosts' , ['post_id'=>$post->id])}}" class="edit-post"><i class="material-icons">edit</i></a> |
+                            <a href="{{route('post.delete' , ['post_id'=>$post->id])}}"><i class="material-icons">delete</i></a>
+                        @endif
                         <br>
                         @foreach($comments->take(2) as $comment)
                             @if($comment->post_id == $post->id)

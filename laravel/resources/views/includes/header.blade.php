@@ -19,7 +19,9 @@
             <li><a href="{{route('account')}}">Account</a></li>
             <li><a href="{{route('logout')}}">Logout</a></li>
         @endif
+        @if(Auth::user() == null)
             <li><a href="{{route('sign-in')}}">Login</a></li>
+        @endif
         </ul>
     </div>
     </nav>
