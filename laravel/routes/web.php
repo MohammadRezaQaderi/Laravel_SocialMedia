@@ -83,9 +83,8 @@ Route::group(['middleware' => ['web']], function(){
     ]);
     
     Route::post('/post-view/{post_id}' ,[
-        'uses' => 'App\Http\Controllers\PostController@getPostView',
-        'as' => 'post.view'
-    ]);
+        'uses' => 'App\Http\Controllers\PostController@getPostView'
+    ])->name('post.view');;
     
     Route::get('/post-delete/{post_id}',[
         'uses' => 'App\Http\Controllers\PostController@getDeletePost',

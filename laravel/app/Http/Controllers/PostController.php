@@ -151,7 +151,7 @@ class PostController extends Controller
 
     public function getPostView($post_id)
     {
-        $post = Post::findOrFail($post_id);
+        $post = Post::find($post_id);
         return view('postView' , ['post' =>$post]); 
     }
 }

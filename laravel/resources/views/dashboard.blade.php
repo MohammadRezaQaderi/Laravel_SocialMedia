@@ -48,7 +48,7 @@
                         <br>
                         @foreach($comments->take(2) as $comment)
                             @if($comment->post_id == $post->id)
-                                {{ $comment->comment}}<br>
+                                {{ $comment->comment}} <span style="color:#A0A0A0"> {{$comment->user_id}}</span><br>
                             @endif
                         @endforeach
                     </div>
