@@ -18,13 +18,14 @@ class CreateUsersTable extends Migration
             $table->timestamps();
             $table->string('email');
             $table->string('username');
+            $table->string('avatar');
             $table->string('first_name');
             $table->string('last_name');
             $table->string('password');
-            $table->string('phone');
-            $table->integer('age');
-            $table->string('gender');
-            $table->text('discription');            
+            $table->string('phone')->nullable();
+            $table->integer('age')->nullable();
+            $table->string('gender')->nullable();
+            $table->text('discription')->nullable();            
             // $table->json('follower');
             $table->rememberToken();
         });
