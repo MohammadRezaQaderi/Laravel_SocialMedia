@@ -27,6 +27,6 @@
         </div>
     </div> 
 
-    <div class="as-signin-accountcreation" style="font-size: 17px;line-height: 1.47059;font-weight: 400;letter-spacing: -.022em;font-family: SF Pro Text,SF Pro Icons,AOS Icons,Helvetica Neue,Helvetica,Arial,sans-serif;margin-top: 7px;display: block;"><a href="{{route('sign-up')}}" class="as-buttonlink" target="_blank"><span aria-hidden="true">Don't have an 2r2r ID? Create one now.</span></a></div>
+    <div style="font-size: 17px;line-height: 1.47059;font-weight: 400;letter-spacing: -.022em;font-family: SF Pro Text,SF Pro Icons,AOS Icons,Helvetica Neue,Helvetica,Arial,sans-serif;margin-top: 7px;display: block;"><a href="{{route('sign-up')}}" >Don't have an 2r2r ID? Create one now.</a></div>
     
 @endsection

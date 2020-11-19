@@ -19,10 +19,21 @@ use Illuminate\Support\Facades\Route;
 
 Route::group(['middleware' => ['web']], function(){
 
-    Route::get('/', function () {
-        return view('welcome');
-    })->name('home');
+    Route::get('/', [
+        'uses' => 'App\Http\Controllers\Controller@index',
+        'as' => 'welcome'
+    ]);
+
+    Route::get('/message/{id}' , [
+        'uses' => 'App\Http\Controllers\Controller@getMessage',
+        'as' => 'message'
+    ]);
     
+    Route::post('/message' , [
+        'uses' => 'App\Http\Controllers\Controller@postSendMessage',
+        'as' => 'message'
+    ]);
+
     Route::get('/Profile',[
         'uses' => 'App\Http\Controllers\UserController@getUserProfile',
         'as' => 'profile',
