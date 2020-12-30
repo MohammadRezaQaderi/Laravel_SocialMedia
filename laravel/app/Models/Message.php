@@ -9,4 +9,9 @@ class Message extends Model
 {
     use HasFactory;
     protected $fillable = ['from' , 'to' , 'message' , 'is_read'];
+    
+    public function users()
+    {
+        return $this->belongsTo('App\Models\User');
+    }
 }

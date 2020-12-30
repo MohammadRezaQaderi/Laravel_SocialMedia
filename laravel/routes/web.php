@@ -19,19 +19,24 @@ use Illuminate\Support\Facades\Route;
 
 Route::group(['middleware' => ['web']], function(){
 
-    Route::get('/', [
-        'uses' => 'App\Http\Controllers\Controller@index',
-        'as' => 'welcome'
+    Route::get('/', function () {
+        return view('welcome');
+    })->name('welcome');
+
+
+    Route::get('/chat', [
+        'uses' => 'App\Http\Controllers\MessageController@index',
+        'as' => 'chatPage'
     ]);
 
     Route::get('/message/{id}' , [
-        'uses' => 'App\Http\Controllers\Controller@getMessage',
+        'uses' => 'App\Http\Controllers\MessageController@getMessage',
         'as' => 'message'
     ]);
     
-    Route::post('/message' , [
-        'uses' => 'App\Http\Controllers\Controller@postSendMessage',
-        'as' => 'message'
+    Route::post('/messages' , [
+        'uses' => 'App\Http\Controllers\MessageController@postSendMessage',
+        'as' => 'messages'
     ]);
 
     Route::get('/Profile',[
@@ -101,7 +106,7 @@ Route::group(['middleware' => ['web']], function(){
         'uses' => 'App\Http\Controllers\PostController@getDeletePost',
         'as' => 'post.delete',
         'middleware' => 'auth'
-    ]);
+    ]); 
     
     Route::get('edit-post/{post_id}' ,[
         'uses' => 'App\Http\Controllers\PostController@getEditPost',
@@ -127,6 +132,12 @@ Route::group(['middleware' => ['web']], function(){
     Route::post('/comment' ,[
         'uses' => 'App\Http\Controllers\PostController@postCommentPost',
         'as' => 'comment',
+        'middleware' => 'auth'
+    ]);
+
+    Route::get('/follow' , [
+        'uses' => 'App\Http\Controllers\UserController@follow',
+        'as' => 'fallow',
         'middleware' => 'auth'
     ]);
 });

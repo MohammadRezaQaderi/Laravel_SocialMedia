@@ -26,7 +26,6 @@ class CreateUsersTable extends Migration
             $table->integer('age')->nullable();
             $table->string('gender')->nullable();
             $table->text('discription')->nullable();            
-            // $table->json('follower');
             $table->rememberToken();
         });
     }

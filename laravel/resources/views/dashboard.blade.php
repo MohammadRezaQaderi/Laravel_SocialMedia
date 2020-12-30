@@ -67,7 +67,7 @@
         <h4 class="modal-title">Comment Post </h4>
       </div>
       <div class="modal-body">
-            <form  action="{{route('comment')}}" method="post" enctype="multipart/form-data" >
+            <form action="{{route('comment')}}" method="post" enctype="multipart/form-data" >
                 <div class="form-group">
                     <label for="comment-body">Comment For Post</label>
                     <textarea class="form-control" name="comment-body" id="comment-body" rows="5"></textarea>
